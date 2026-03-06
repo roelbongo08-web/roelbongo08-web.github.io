@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roel Bongo | Web Portfolio</title>
+    <style>
+        :root { --primary: #2563eb; --dark: #1e293b; --light: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; color: var(--dark); }
+        header { background: white; padding: 60px 20px; text-align: center; border-bottom: 2px solid #e2e8f0; }
+        .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
+        h2 { text-align: center; margin-bottom: 40px; }
+        
+        /* Grid Layout para sa Projects */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+        
+        /* Image Style & Effects */
+        .card img { width: 100%; height: 200px; object-fit: cover; transition: 0.5s; }
+        .card:hover img { transform: scale(1.1); } /* Zoom effect nimo! */
+        
+        .card-content { padding: 20px; }
+        .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Roel Bongo</h1>
+    <p>WordPress Developer & Web Design Specialist from Cebu</p>
+</header>
+
+<div class="container">
+    <h2>My Web Projects</h2>
+    <div class="project-grid">
+        <div class="card">
+            <img src="images/jes-hub.jpg" alt="Jes Enterprises Hub">
+            <div class="card-content">
+                <h3>Jes Enterprises Hub</h3>
+                <p>E-commerce optimization and custom layout fixes.</p>
+                <a href="https://jesenterpriseshub.com/" class="btn" target="_blank">View Website</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/wr-shop.jpg" alt="W&R Online Shop">
+            <div class="card-content">
+                <h3>W&R Online Shop</h3>
+                <p>Product management and WooCommerce database setup.</p>
+                <a href="https://roelbongo08-web.github.io" class="btn">View Project</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
