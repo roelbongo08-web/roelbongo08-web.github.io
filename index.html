@@ -3,56 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roel Bongo | Web Portfolio</title>
+    <title>ROEL BONGO PORTFOLIO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --primary: #2563eb; --dark: #1e293b; --light: #f8fafc; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; color: var(--dark); }
-        header { background: white; padding: 60px 20px; text-align: center; border-bottom: 2px solid #e2e8f0; }
-        .container { max-width: 1000px; margin: auto; padding: 40px 20px; }
-        h2 { text-align: center; margin-bottom: 40px; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         
-        /* Grid Layout para sa Projects */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); }
-        
-        /* Image Style & Effects */
-        .card img { width: 100%; height: 200px; object-fit: cover; transition: 0.5s; }
-        .card:hover img { transform: scale(1.1); } /* Zoom effect nimo! */
-        
-        .card-content { padding: 20px; }
-        .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; margin-top: 10px; }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-animate {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Continuous slider logic */
+        @keyframes landscapeSlide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-100% / 2)); }
+        }
+
+        .landscape-slide-track {
+            display: flex;
+            width: max-content;
+            animation: landscapeSlide 60s linear infinite;
+        }
+
+        .landscape-slide-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Exact 2 images per viewport width */
+        .gallery-item {
+            width: calc(50vw - 12px); 
+            height: 350px;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-item {
+                height: 450px;
+                width: calc(50vw - 20px);
+            }
+        }
+
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #2563eb;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .page-section {
+            display: none;
+            min-height: calc(100vh - 72px);
+        }
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes autoScrollVertical {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-75%); }
+        }
+
+        .auto-slide-vertical {
+            animation: autoScrollVertical 25s linear infinite;
+        }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900">
 
-<header>
-    <h1>Roel Bongo</h1>
-    <p>WordPress Developer & Web Design Specialist from Cebu</p>
-</header>
-
-<div class="container">
-    <h2>My Web Projects</h2>
-    <div class="project-grid">
-        <div class="card">
-            <img src="images/jes-hub.jpg" alt="Jes Enterprises Hub">
-            <div class="card-content">
-                <h3>Jes Enterprises Hub</h3>
-                <p>E-commerce optimization and custom layout fixes.</p>
-                <a href="https://jesenterpriseshub.com/" class="btn" target="_blank">View Website</a>
+    <nav class="glass-nav fixed w-full z-50 top-0 left-0">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="text-xl font-bold tracking-tighter text-blue-600 uppercase cursor-pointer" onclick="showSection('home')">ROEL BONGO PORTFOLIO</span>
+            
+            <div class="space-x-8 hidden md:flex items-center">
+                <a onclick="showSection('home')" id="nav-home" class="nav-link active hover:text-blue-600 transition font-medium uppercase tracking-wide text-sm">Home</a>
+                <a onclick="showSection('portfolio')" id="nav-portfolio" class="nav-link hover:text-blue-600 transition font-medium uppercase tracking-wide text-sm">Portfolio</a>
+                <a onclick="showSection('skills')" id="nav-skills" class="nav-link hover:text-blue-600 transition font-medium uppercase tracking-wide text-sm">Skills</a>
+                <a onclick="showSection('contacts')" id="nav-contacts" class="nav-link hover:text-blue-600 transition font-medium uppercase tracking-wide text-sm">Contact</a>
             </div>
+            
+            <a href="mailto:roelbongo08@gmail.com" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition shadow-md">Hire Me</a>
         </div>
+    </nav>
 
-        <div class="card">
-            <img src="images/wr-shop.jpg" alt="W&R Online Shop">
-            <div class="card-content">
-                <h3>W&R Online Shop</h3>
-                <p>Product management and WooCommerce database setup.</p>
-                <a href="https://roelbongo08-web.github.io" class="btn">View Project</a>
+    <main class="pt-[72px]">
+        <section id="home" class="page-section active section-animate hero-gradient py-12 md:py-20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
+                <div class="mb-12">
+                    <h1 class="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight">
+                        Hi 👋, I'm <span class="text-blue-600">ROEL BONGO</span>
+                    </h1>
+                    <p class="text-lg md:text-2xl text-slate-700 mb-10 leading-relaxed max-w-3xl mx-auto font-medium">
+                        A passionate E-commerce WordPress Developer and Web Design Specialist based in Cebu, Philippines.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+                        <button onclick="showSection('portfolio')" class="bg-slate-900 text-white px-10 py-4 rounded-full font-bold hover:bg-slate-800 transition shadow-xl text-lg">View My Work</button>
+                        <button onclick="showSection('contacts')" class="bg-white text-slate-900 border border-slate-200 px-10 py-4 rounded-full font-bold hover:bg-slate-50 transition shadow-sm text-lg">Contact Me</button>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Roel" class="w-14 h-14 rounded-full bg-white p-1 border-2 border-blue-100 shadow-md" alt="Roel Bongo Portrait">
+                        <div class="text-left">
+                            <p class="font-bold text-slate-800 text-sm">Roel Bongo</p>
+                            <p class="text-slate-500 text-xs">WordPress Expert & Ecommerce Specialist</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
 
+            <!-- Enhanced Slider with Unique Items -->
+            <div class="w-full mt-4 overflow-hidden">
+                <div class="landscape-slide-track gap-4 md:gap-8 px-4" id="landscape-gallery">
+                    <!-- Unique Slot 1 -->
+                    <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
+                        <div id="img-logo-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
+                            <p class="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-1">Branding</p>
+                            <h3 class="text-xl md:text-2xl font-extrabold">Logo Editor</h3>
+                        </div>
+                    </div>
+                    <!-- Unique Slot 2 -->
+                    <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
+                        <div id="img-wp-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
+                            <p class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">Development</p>
+                            <h3 class="text-xl md:text-2xl font-extrabold">WordPress Expert</h3>
+                        </div>
+                    </div>
+                    <!-- Unique Slot 3 -->
+                    <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
+                        <div id="img-ubuntu-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
+                            <p class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-1">Infrastructure</p>
+                            <h3 class="text-xl md:text-2xl font-extrabold">Ubuntu Administrator</h3>
+                        </div>
+                    </div>
+                    <!-- Unique Slot 4 -->
+                    <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
+                        <div id="img-design-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
+                            <p class="text-xs font-bold uppercase tracking-widest text-pink-400 mb-1">UI/UX Design</p>
+                            <h3 class="text-xl md:text-2xl font-extrabold">Creative Layouts</h3>
+                        </div>
+                    </div>
+                    <!-- Unique Slot 5 -->
+                    <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
+                        <div id="img-store-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
+                            <p class="text-xs font-bold uppercase tracking-widest text-green-400 mb-1">E-commerce</p>
+                            <h3 class="text-xl md:text-2xl font-extrabold">Online Storefronts</h3>
+                        </div>
+                    </div>
+                    <!-- Unique Slot 6 -->
+                    <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
+                        <div id="img-server-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
+                            <p class="text-xs font-bold uppercase tracking-widest text-orange-400 mb-1">Cloud Services</p>
+                            <h3 class="text-xl md:text-2xl font-extrabold">Server Management</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="page-section section-animate py-20 px-6">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4 text-slate-800 uppercase tracking-wider">My Portfolio</h2>
+                <p class="text-slate-600 mb-12">Take a look at my latest web development and design projects.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
+                    <div class="flex flex-col items-center">
+                        <div class="relative group w-full h-[550px] rounded-3xl overflow-hidden bg-slate-100 shadow-xl mb-4 cursor-pointer border border-slate-200" 
+                             onclick="window.open('https://jesenterpriseshub.com/', '_blank')">
+                            <div class="absolute inset-0 bg-blue-600/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
+                                <span class="text-white font-bold text-lg border-2 border-white px-6 py-2 rounded-full backdrop-blur-sm uppercase tracking-wider">Visit Website</span>
+                            </div>
+                            <div class="auto-slide-vertical flex flex-col gap-4 p-4" id="jes-vertical-container">
+                                <img src="image_f7083a.jpg" class="w-full rounded-lg shadow-lg" alt="Jes Enterprise Website Preview">
+                            </div>
+                        </div>
+                        <span class="text-lg font-bold text-slate-800 uppercase tracking-tight">Jes Enterprise Hub (Live Site)</span>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <div class="relative group w-full h-[550px] rounded-3xl overflow-hidden bg-slate-200 shadow-xl mb-4 cursor-pointer border border-slate-200" 
+                             onclick="window.open('https://greentekessentials.com/', '_blank')">
+                            <div class="absolute inset-0 bg-blue-600/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
+                                <span class="text-white font-bold text-lg border-2 border-white px-6 py-2 rounded-full backdrop-blur-sm uppercase tracking-wider">Visit Website</span>
+                            </div>
+                            <div class="auto-slide-vertical flex flex-col gap-4 p-4" id="greentek-vertical-container">
+                                <div class="w-full h-80 bg-white rounded-lg flex items-center justify-center text-slate-400 text-sm"><span class="loader"></span></div>
+                            </div>
+                        </div>
+                        <span class="text-lg font-bold text-slate-800 uppercase tracking-tight">Greentek Essentials</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="page-section section-animate py-20 px-6 bg-white">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-12 uppercase tracking-wider">Languages & Tools</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                    <div class="flex flex-col items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg" class="w-16 h-16" alt="WordPress">
+                        <span class="font-bold text-slate-700 text-sm">WordPress</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" class="w-16 h-16" alt="PHP">
+                        <span class="font-bold text-slate-700 text-sm">PHP</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-16 h-16" alt="JavaScript">
+                        <span class="font-bold text-slate-700 text-sm">JavaScript</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="w-16 h-16" alt="MySQL">
+                        <span class="font-bold text-slate-700 text-sm">MySQL</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" class="w-16 h-16" alt="CSS3">
+                        <span class="font-bold text-slate-700 text-sm">CSS3</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-16 h-16" alt="HTML5">
+                        <span class="font-bold text-slate-700 text-sm">HTML5</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacts Section -->
+        <section id="contacts" class="page-section section-animate py-24 px-6 bg-slate-900 text-white overflow-hidden relative">
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 uppercase tracking-tighter">Let's Connect</h2>
+                    <p class="text-slate-400 max-w-lg mx-auto">Ready to help with your next big project. Let's build something amazing together.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-center md:text-left">
+                    <a href="https://wa.me/qr/YGONOY4QJES2M" target="_blank" class="group bg-slate-800/50 p-8 rounded-3xl border border-slate-700 hover:border-green-500 transition-all">
+                        <h3 class="text-xl font-bold mb-2">WhatsApp</h3>
+                        <p class="text-slate-400 text-sm mb-4">Chat with me instantly for quick queries.</p>
+                        <span class="text-green-500 font-semibold">Message Me →</span>
+                    </a>
+
+                    <a href="mailto:roelbongo08@gmail.com" class="group bg-slate-800/50 p-8 rounded-3xl border border-slate-700 hover:border-blue-500 transition-all">
+                        <h3 class="text-xl font-bold mb-2">Email</h3>
+                        <p class="text-slate-400 text-sm mb-4">Send me your detailed project inquiries.</p>
+                        <span class="text-blue-500 font-semibold">Email Me →</span>
+                    </a>
+
+                    <div class="bg-blue-600 p-8 rounded-3xl shadow-2xl flex flex-col justify-between text-left">
+                        <h3 class="text-2xl font-extrabold mb-4 uppercase text-white">Work Status</h3>
+                        <p class="font-bold text-white text-lg">Currently Available for Freelance Projects</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-950 text-slate-300 py-16 px-6 border-t border-slate-800 text-center">
+        <p class="text-xs uppercase tracking-widest font-medium">© 2024 ROEL BONGO PORTFOLIO. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        const apiKey = ""; 
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeNavLink = document.getElementById('nav-' + (sectionId === 'portfolio' ? 'portfolio' : sectionId));
+            if (activeNavLink) {
+                activeNavLink.classList.add('active');
+            }
+        }
+
+        async function fetchAIImage(prompt) {
+            const maxRetries = 5;
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ instances: [{ prompt }], parameters: { sampleCount: 1 } })
+                    });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const result = await response.json();
+                    if (result && result.predictions && result.predictions[0]) {
+                        return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                    }
+                } catch (error) {
+                    if (i === maxRetries - 1) return null;
+                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+                }
+            }
+        }
+
+        async function setupGallery() {
+            const landscapeCont = document.getElementById('landscape-gallery');
+            const jesCont = document.getElementById('jes-vertical-container');
+            const greentekCont = document.getElementById('greentek-vertical-container');
+
+            const prompts = {
+                logo1: "Modern minimalist logo design process on a tablet screen pro design",
+                wp1: "Professional developer working on WordPress website dashboard 4k",
+                ubuntu1: "Data center server racks blue glowing lights technical background",
+                design1: "Sleek web UI UX design layout on high end monitor",
+                store1: "E-commerce platform interface showing products and cart 4k",
+                server1: "Cloud computing infrastructure network architecture visual"
+            };
+
+            try {
+                const imgs = {};
+                const keys = Object.keys(prompts);
+                
+                for (const key of keys) {
+                    imgs[key] = await fetchAIImage(prompts[key]);
+                }
+
+                if (imgs.logo1) document.getElementById('img-logo-1').innerHTML = `<img src="${imgs.logo1}" class="w-full h-full object-cover">`;
+                if (imgs.wp1) document.getElementById('img-wp-1').innerHTML = `<img src="${imgs.wp1}" class="w-full h-full object-cover">`;
+                if (imgs.ubuntu1) document.getElementById('img-ubuntu-1').innerHTML = `<img src="${imgs.ubuntu1}" class="w-full h-full object-cover">`;
+                if (imgs.design1) document.getElementById('img-design-1').innerHTML = `<img src="${imgs.design1}" class="w-full h-full object-cover">`;
+                if (imgs.store1) document.getElementById('img-store-1').innerHTML = `<img src="${imgs.store1}" class="w-full h-full object-cover">`;
+                if (imgs.server1) document.getElementById('img-server-1').innerHTML = `<img src="${imgs.server1}" class="w-full h-full object-cover">`;
+
+                landscapeCont.innerHTML += landscapeCont.innerHTML;
+
+                if (imgs.wp1) {
+                    jesCont.innerHTML = `
+                        <img src="image_f7083a.jpg" class="w-full rounded-lg shadow-lg">
+                        <img src="${imgs.wp1}" class="w-full rounded-lg shadow-lg">
+                        <img src="${imgs.design1 || imgs.wp1}" class="w-full rounded-lg shadow-lg">
+                    `;
+                }
+                if (imgs.store1) {
+                    greentekCont.innerHTML = `
+                        <img src="${imgs.store1}" class="w-full rounded-lg shadow-lg">
+                        <img src="${imgs.design1 || imgs.store1}" class="w-full rounded-lg shadow-lg">
+                        <img src="${imgs.store1}" class="w-full rounded-lg shadow-lg">
+                    `;
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        window.onload = setupGallery;
+    </script>
 </body>
 </html>
