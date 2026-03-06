@@ -48,16 +48,16 @@
             animation-play-state: paused;
         }
 
-        /* Exact 2 images per viewport width */
+        /* Increased Height for the slider items */
         .gallery-item {
             width: calc(50vw - 12px); 
-            height: 350px;
+            height: 500px; /* Increased from 350px */
             flex-shrink: 0;
         }
 
         @media (min-width: 768px) {
             .gallery-item {
-                height: 450px;
+                height: 650px; /* Increased from 450px */
                 width: calc(50vw - 20px);
             }
         }
@@ -162,7 +162,7 @@
                 <div class="landscape-slide-track gap-4 md:gap-8 px-4" id="landscape-gallery">
                     <!-- Unique Slot 1 -->
                     <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
-                        <div id="img-logo-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div id="img5.jpg" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
                         <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
                             <p class="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-1">Branding</p>
@@ -171,7 +171,7 @@
                     </div>
                     <!-- Unique Slot 2 -->
                     <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
-                        <div id="img-wp-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div id="img4.jpg" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
                         <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
                             <p class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">Development</p>
@@ -180,7 +180,7 @@
                     </div>
                     <!-- Unique Slot 3 -->
                     <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
-                        <div id="img-ubuntu-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div id="img1.jpg" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
                         <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
                             <p class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-1">Infrastructure</p>
@@ -189,29 +189,20 @@
                     </div>
                     <!-- Unique Slot 4 -->
                     <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
-                        <div id="img-design-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div id="img2.jpg" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
                         <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
                             <p class="text-xs font-bold uppercase tracking-widest text-pink-400 mb-1">UI/UX Design</p>
-                            <h3 class="text-xl md:text-2xl font-extrabold">Creative Layouts</h3>
+                            <h3 class="text-xl md:text-2xl font-extrabold">Jes Enterprises hub</h3>
                         </div>
                     </div>
                     <!-- Unique Slot 5 -->
                     <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
-                        <div id="img-store-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
+                        <div id="img3.jpg" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
                         <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
                             <p class="text-xs font-bold uppercase tracking-widest text-green-400 mb-1">E-commerce</p>
-                            <h3 class="text-xl md:text-2xl font-extrabold">Online Storefronts</h3>
-                        </div>
-                    </div>
-                    <!-- Unique Slot 6 -->
-                    <div class="gallery-item bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative group">
-                        <div id="img-server-1" class="w-full h-full bg-slate-200 flex items-center justify-center"><span class="loader"></span></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
-                        <div class="absolute bottom-0 left-0 w-full p-6 text-white text-left">
-                            <p class="text-xs font-bold uppercase tracking-widest text-orange-400 mb-1">Cloud Services</p>
-                            <h3 class="text-xl md:text-2xl font-extrabold">Server Management</h3>
+                            <h3 class="text-xl md:text-2xl font-extrabold">Greentek Essentials</h3>
                         </div>
                     </div>
                 </div>
@@ -232,7 +223,7 @@
                                 <span class="text-white font-bold text-lg border-2 border-white px-6 py-2 rounded-full backdrop-blur-sm uppercase tracking-wider">Visit Website</span>
                             </div>
                             <div class="auto-slide-vertical flex flex-col gap-4 p-4" id="jes-vertical-container">
-                                <img src="image_f7083a.jpg" class="w-full rounded-lg shadow-lg" alt="Jes Enterprise Website Preview">
+                                <img src="img2.jpg" class="w-full rounded-lg shadow-lg" alt="Jes Enterprise Website Preview">
                             </div>
                         </div>
                         <span class="text-lg font-bold text-slate-800 uppercase tracking-tight">Jes Enterprise Hub (Live Site)</span>
@@ -245,7 +236,7 @@
                                 <span class="text-white font-bold text-lg border-2 border-white px-6 py-2 rounded-full backdrop-blur-sm uppercase tracking-wider">Visit Website</span>
                             </div>
                             <div class="auto-slide-vertical flex flex-col gap-4 p-4" id="greentek-vertical-container">
-                                <div class="w-full h-80 bg-white rounded-lg flex items-center justify-center text-slate-400 text-sm"><span class="loader"></span></div>
+                                <img src="img3.jpg" class="w-full rounded-lg shadow-lg" alt="Jes Enterprise Website Preview">
                             </div>
                         </div>
                         <span class="text-lg font-bold text-slate-800 uppercase tracking-tight">Greentek Essentials</span>
